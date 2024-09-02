@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.ReviewReplyRepository">
+	<select id="getReviewReplyRequestDto"
+			resultType="dw_intern_project.the_banchan_and_i.dto.request.ReviewReplyRequestDto">
+		SELECT r._seq AS seq, r.content, p.name AS pbName, c.subCategory
+		FROM (
+				 SELECT r._seq _seq, r.pb_code pb_code, r.content as content
+				 FROM review r
+						  LEFT JOIN review_reply rr
+									ON r._seq = rr.review_seq
+				 WHERE rr.review_seq IS NULL) r
+				 JOIN product p
+					  ON r.pb_code = p.pb_code
+						  LEFT JOIN (
+										SELECT pb_code, string_agg(sub_category,',') AS subCategory
+										FROM category
+										GROUP BY pb_code) c
+			  					ON p.pb_code = c.pb_code
+	</select>
+
+	<insert id="saveReviewReply"
+		parameterType="dw_intern_project.the_banchan_and_i.dto.response.ReviewReplyResponseDto">
+		INSERT INTO review_reply(review_seq, reply, peak_emotion, positive, neutral,
+		negative) VALUES (#{reviewSeq}, #{reply}, #{peakEmotion},
+		#{positive}, #{neutral}, #{negative})
+		ON CONFLICT (review_seq)
+		DO UPDATE
+		SET review_seq = #{reviewSeq},
+			reply = #{reply},
+			peak_emotion = #{peakEmotion},
+			positive = #{positive},
+			neutral = #{neutral},
+			negative = #{negative}
+	</insert>
+	
+	<update id="updateReply" parameterType="dw_intern_project.the_banchan_and_i.dto.request.ReplyRegistRequestDto">
+        UPDATE review_reply
+        SET reply = #{rv_reply}
+        WHERE review_seq = #{rv_seq}
+    </update>
+</mapper>

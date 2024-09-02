@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.ReviewSummaryRepository">
+	
+	<resultMap id="ReviewSummaryRequestDto" type="dw_intern_project.the_banchan_and_i.dto.request.ReviewSummaryRequestDto">
+		<result property="pbCode" column="pb_code" />
+		<result property="pbName" column="name" />
+		<collection property="contentsWithKeywords" ofType="dw_intern_project.the_banchan_and_i.dto.request.ContentWithKeyword">
+			<result property="content" column="content"  />
+			<result property="keyword" column="keyword"  />
+		</collection>
+	</resultMap>
+	<select id="getReviewSummaryRequestDto"
+			resultMap="ReviewSummaryRequestDto">
+		SELECT p.pb_code, p.name, r.content, r.keyword FROM review r
+													 JOIN product p
+														  ON r.pb_code = p.pb_code
+		WHERE  
+		p.pb_code = #{pbCode}
+		order by r.reg_dt DESC limit 100
+	</select>
+	
+	<select id="getSummary"
+			resultType="dw_intern_project.the_banchan_and_i.dto.request.ReviewSummaryRequestDto">
+		SELECT summary, pb_code pbCode FROM review_summary where positive_highlight is null
+	</select>	
+
+	<insert id="saveReviewSummary"
+		parameterType="dw_intern_project.the_banchan_and_i.dto.response.ReviewSummaryResponseDto">
+		INSERT INTO review_summary(pb_code, summary, peak_emotion, positive,
+		neutral, negative) VALUES (#{pbCode}, #{summary},
+		#{peakEmotion}, #{positive}, #{neutral}, #{negative})
+	</insert>
+
+	<update id="updateReviewSummary"
+		parameterType="dw_intern_project.the_banchan_and_i.dto.response.ReviewSummaryResponseDto">
+		UPDATE review_summary SET 
+		summary = #{summary}
+		WHERE pb_code = #{pbCode}
+	</update>
+	
+	<update id="saveReviewSummaryHighlight" parameterType="dw_intern_project.the_banchan_and_i.dto.response.ReviewSummaryResponseDto">
+        UPDATE review_summary
+        SET positive_highlight = #{highlightPositive}, negative_highlight = #{highlightNegative}
+        WHERE pb_code = #{pbCode}
+    </update>
+</mapper>

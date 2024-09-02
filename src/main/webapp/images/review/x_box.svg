@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+  <g id="X_box" transform="translate(0.375 0.375)">
+    <path id="사각형_472" data-name="사각형 472" d="M2,0H30a0,0,0,0,1,0,0V28a2,2,0,0,1-2,2H0a0,0,0,0,1,0,0V2A2,2,0,0,1,2,0Z" transform="translate(-0.375 -0.375)" opacity="0.6"/>
+    <g id="X_14" transform="translate(7.125 7.125)">
+      <g id="Group_5_Copy" data-name="Group 5 Copy" transform="translate(14.651 0.5) rotate(90)">
+        <path id="Stroke_1" data-name="Stroke 1" d="M0,0,6.96,6.96" transform="translate(0 0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="Stroke_3" data-name="Stroke 3" d="M6.96,0,0,6.96" transform="translate(6.89 0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+      <g id="Group_5_Copy-2" data-name="Group 5 Copy" transform="translate(0.5 14.351) rotate(-90)">
+        <path id="Stroke_1-2" data-name="Stroke 1" d="M6.96,0,0,6.96" transform="translate(6.89)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+        <path id="Stroke_3-2" data-name="Stroke 3" d="M0,0,6.96,6.96" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

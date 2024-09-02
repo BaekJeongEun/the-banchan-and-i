@@ -1,0 +1,515 @@
+@charset "utf-8";
+
+/* 쿠폰 */
+/* .popup_box .coupon_wrap {
+  margin-bottom: 0;
+}
+
+.popup_dim .popup_box .inner .popup_tit span.icon_info2 {
+  font-size: 14px;
+}
+
+.coupon_wrap {
+  margin-top: 28px;
+  overflow: hidden;
+}
+
+.coupon_wrap .coupon_cont {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.coupon_wrap .coupon_cont .coupon_list {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items {
+  position: relative;
+  width: 332px;
+  height: 130px;
+  padding: 20px;
+  color: #ffffff;
+  text-align: left;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url(../../images/renew_2021/img_coupon_bg.jpg) no-repeat 0 0;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 100%;
+  background: linear-gradient(90deg, #FC9842 0%, #FD6645 100%);
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items.color_orange::before {
+  background: linear-gradient(225deg, #FC9842 0%, #FD6645 100%);
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items.color_green::before {
+  background: linear-gradient(225deg, #1BCEB9 0%, #2593B8 100%);
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items.color_blue::before {
+  background: linear-gradient(225deg, #5089FF 0%, #706DFA 100%);
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_discount {
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333333;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_discount em {
+  display: inline-block;
+  vertical-align: top;
+  margin-top: -7px;
+  font-size: 28px;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_discount .flag {
+  display: inline-block;
+  vertical-align: top;
+  height: 22px;
+  margin-left: 5px;
+  padding: 0 10px;
+  line-height: 22px;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 12px;
+  color: #FF7600;
+  font-weight: 600;
+  border: 1px solid #FF7600;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_title {
+  position: relative;
+  width: 270px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #333333;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_text {
+  display: block;
+  margin-top: 12px;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  line-height: 18px;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #999999;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_text+.cp_text {
+  margin-top: 2px;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_text.black {
+  color: #000;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_number {
+  position: absolute;
+  top: 28px;
+  right: 8px;
+  width: 53px;
+  margin-top: 80px;
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_button {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  margin-top: -8px;
+  margin-right: 20px;
+  display: inline-block;
+  width: 13px;
+  height: 17px;
+  background: url(../../images/renew_2021/btn_download.png) no-repeat 0 0;
+  text-indent: -9999px;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_done {
+  position: absolute;
+  top: 50%;
+  right: 21px;
+  display: inline-block;
+  font-size: 14px;
+  color: #939393;
+}
+
+.coupon_wrap .coupon_cont .cp_detail {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.coupon_wrap .coupon_cont .cp_detail .cp_date {
+  font-size: 16px;
+  color: #333333;
+}
+
+.coupon_wrap .coupon_cont .cp_detail .cp_rest {
+  font-size: 12px;
+  color: #999999;
+}
+
+.coupon_wrap .coupon_cont .cp_detail .cp_dday {
+  position: relative;
+  padding-left: 10px;
+  font-size: 12px;
+  color: #ff5600;
+}
+
+.coupon_wrap .coupon_cont .cp_detail .cp_dday:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 12px;
+  margin-top: 3px;
+  margin-left: 5px;
+  background: #999999;
+} */
+
+/* 꼭읽어주세요 */
+.gray_info_box {
+  padding: 40px;
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.gray_info_box h3 {
+  margin-bottom: 15px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #000000;
+  line-height: 16px;
+}
+
+.gray_info_box h6 {
+  margin-bottom: 15px;
+}
+
+.gray_info_box ul li {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 10px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #000000;
+  line-height: 19px;
+}
+
+.gray_info_box ul li::before {
+  content: "";
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  top: 10px;
+  background: #000000;
+}
+
+/* 씨앗 */
+/* .bnf_seed_wrap .tit_seedbnf span {background: url(../../images/title/title_benefit.gif) no-repeat 0 -435px;}
+.end_seed_service {margin: 80px auto; text-align: center;}
+.end_seed_service h3 {margin-bottom: 30px; font-size: 30px; letter-spacing: -2px;}
+.end_seed_service h3::before {content: ""; display: inline-block; vertical-align: middle; width: 29px; height: 27px; padding-left: 10px; background: url(../../images/renew_2021/icon_info_big.png) no-repeat 0 0;}
+.end_seed_service p {font-size: 16px;} */
+
+/* 기획전 */
+.tit_planshop_new {
+  margin: 40px 0;
+  font-size: 30px;
+  color: #333333;
+  font-weight: 700;
+  text-align: center;
+}
+
+.sort_list {
+  overflow: hidden;
+}
+
+.sort_list li {
+  float: left;
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid #e2e2e2;
+}
+
+.sort_list li:first-child {
+  margin-left: 0;
+  border-left: 0;
+}
+
+.sort_list li a {
+  color: #333333;
+}
+
+.sort_list li.active a {
+  font-weight: 900;
+}
+
+.planshop_list {
+  overflow: hidden;
+}
+
+.planshop_list li {
+  float: left;
+  width: 356px;
+  height: 285px;
+  margin-left: 11px;
+}
+
+.planshop_list li:nth-child(3n+1) {
+  margin-left: 0;
+}
+
+.planshop_list li a {
+  display: block;
+  width: 356px;
+  height: auto;
+}
+
+.planshop_list li a img {
+  width: 356px;
+  height: auto;
+}
+
+.planshop_list li .desc {
+  padding: 0 15px;
+}
+
+.planshop_list li .desc h3 {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #333333;
+  line-height: 22px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.planshop_list li .desc p {
+  display: inline-block;
+  margin-top: 7px;
+  font-size: 13px;
+  color: #7e7e7e;
+}
+
+.event_title_box {
+  position: relative;
+}
+
+.event_title_box .event_back_btn {
+  display: block;
+  width: 50px;
+  background: url(../../images/icon/arrow_back.svg) no-repeat center/100%;
+  position: absolute;
+  top: 50%;
+  left: -5px;
+  transform: translateY(-50%);
+  text-indent: -99999px;
+}
+
+.event_title_box .event_back_btn:hover {
+  background: url(../../images/icon/arrow_back_hover.svg) no-repeat center/100%;
+}
+
+/* 쿠폰혜택 페이지 */
+/* .coupon_wrap {
+  margin-bottom: 60px;
+}
+
+.coupon_wrap ul {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  column-gap: 28px;
+  row-gap: 30px;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items {
+  width: 408px;
+  height: 180px;
+  background: url(../../images/common/coupon_tbc.png) no-repeat 0 0;
+  padding: 20px 30px;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_title {
+  margin-top: 8px;
+  font-size: 22px;
+  display: block;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_discount em {
+  font-size: 40px;
+  margin-top: -4px;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_text {
+  font-size: 14px;
+}
+
+.coupon_wrap .coupon_cont .coupon_list .coupon_items .cp_button {
+  background: url(../../images/common/cp_downlad.png) no-repeat center;
+  top: 48%;
+  margin: 0;
+  transform: translateY(-50%);
+  padding: 90px 34px;
+}
+
+.coupon_wrap .coupon_cont .tx_expdate {
+  text-align: center;
+  font-size: 14px;
+  font-weight: normal;
+  color: #7e7e7e;
+  margin: 18px 0;
+}
+
+.coupon_wrap .coupon_cont .tx_expdate strong {
+  font-weight: normal;
+} */
+
+.event .cnt_alert,
+.benefit .cnt_alert {
+  width: 100%;
+  padding: 30px;
+  border: none;
+  background: #f7f7f7;
+  justify-content: flex-start;
+}
+
+.event .cnt_alert .sti,
+.benefit .cnt_alert .sti {
+  padding: 0;
+  background: none;
+  margin-right: 50px;
+}
+
+.event .cnt_alert .sti,
+.benefit .cnt_alert .sti {
+  padding: 0;
+  background: none;
+  margin-right: 50px;
+}
+
+.coupon-box-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 40px 0;
+  padding: 30px;
+  background: #fffaee;
+}
+
+.coupon-box-wrap .left p {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 24px;
+  line-height: 29px;
+  color: #333;
+  font-weight: 700;
+}
+
+.coupon-box-wrap .left strong {
+  position: relative;
+  display: inline-block;
+  font-size: 15px;
+  line-height: 18px;
+  color: #333;
+  font-weight: 400;
+}
+
+.coupon-box-wrap .left strong:after {
+  position: absolute;
+  right: 0;
+  margin-right: -16px;
+  top: 0;
+  display: block;
+  width: 1px;
+  height: 18px;
+  background: #ddd;
+  content: "";
+}
+
+.coupon-box-wrap .left span {
+  margin-left: 26px;
+  font-size: 15px;
+  line-height: 18px;
+  color: #7E7E7E;
+  font-weight: 400;
+}
+
+.coupon-box {
+  overflow: hidden;
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: 100px;
+  height: 50px;
+}
+
+.coupon-box.coupon-basic {
+  border-color: #E5E5E5;
+}
+
+.coupon-box .coupon-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 0 14px;
+  background: #fff;
+}
+
+.coupon-box .coupon-info::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+}
+
+.coupon-box .coupon-info.color-blue::before {
+  background: linear-gradient(225deg, #FC9842 0%, #FD6645 100%);
+}
+
+.coupon-box .coupon-info h5 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333;
+  text-align: left;
+}
+
+.coupon-box .coupon-info h5 span {
+  font-size: 15px;
+}

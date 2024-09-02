@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.CartRepository">
+	<select id="getCart"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.CartResponseDto">
+		select p.name name, p.shipping_fee shippingFee, p.img_code
+		imgCode, p.img_num imgNum, p.img_text imgText, p.price price, c.amount amount from cart c
+		join product p on (c.pb_code=p.pb_code) where c.user_seq = #{userSeq}
+	</select>
+	
+	<select id="totalAmount"
+		resultType="int">
+		select count(c.amount) from cart c where c.user_seq = #{userSeq}
+	</select>
+</mapper>

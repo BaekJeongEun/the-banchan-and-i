@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.ReviewClassificationRepository">
+
+	<insert id="saveReviewClassification"
+		parameterType="dw_intern_project.the_banchan_and_i.entity.ReviewClassification"
+		useGeneratedKeys="true" keyProperty="seq">
+		INSERT INTO
+		review_classification(review_seq, classification_seq)
+		VALUES (#{reviewSeq}, #{classificationSeq})
+		on CONFLICT
+		(_seq)
+		DO UPDATE
+		SET review_seq = EXCLUDED.review_seq,
+		classification_seq=EXCLUDED.classification_seq;
+	</insert>
+
+</mapper>

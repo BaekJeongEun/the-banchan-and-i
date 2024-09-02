@@ -1,0 +1,11 @@
+.gradle
+.idea
+.metadata
+.settings
+bin
+build
+.classpath
+.project
+the-banchan-and-i.iml
+.DS_Store
+output.csv

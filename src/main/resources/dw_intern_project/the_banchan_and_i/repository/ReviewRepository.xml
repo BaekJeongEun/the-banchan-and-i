@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.ReviewRepository">
+
+	<select id="getProductReview"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ProductReviewResponseDto">
+		select count(r._seq) as totalCnt, ROUND(AVG(r.score), 1) as
+		totalScore, MAX(rr.peak_emotion) peakEmotion, MAX(rr.positive) positive,
+		MAX(rr.neutral) neutral, MAX(rr.negative) negative, MAX(rr.summary) reviewSummary, MAX(rr.negative_highlight) nagativeH, MAX(rr.positive_highlight) positiveH from
+		review r left join review_summary rr on (r.pb_code = rr.pb_code) where
+		r.pb_code = #{pbCode} group by r.pb_code
+	</select>
+
+	<select id="countReview" resultType="int">
+		select count(r._seq) from
+		review r where r.pb_code = #{pbCode}
+	</select>
+
+	<select id="getKeywordWithCnt" resultType="java.lang.String">
+		select keyword from
+		review r where r.pb_code = #{pbCode}
+	</select>
+
+	<resultMap id="photoAndVideoResponseDto"
+		type="dw_intern_project.the_banchan_and_i.dto.response.PhotoAndVideoResponseDto">
+		<result column="photoCnt" property="photoCnt" />
+		<result column="photoOnly" property="photoOnly" />
+		<result column="videoOnly" property="videoOnly" />
+	</resultMap>
+	<select id="getPhotoAndVideo"
+		resultMap="photoAndVideoResponseDto">
+		SELECT
+		(SELECT COUNT(*) FROM image i join review r on (r._seq
+		= i.review_seq) WHERE
+		r.pb_code = #{pbCode}) AS photoCnt,
+		(SELECT
+		COUNT(*) FROM image i join review r on (r._seq = i.review_seq) WHERE
+		r.pb_code = #{pbCode} AND file_type = '10') AS photoOnly,
+		(SELECT
+		COUNT(*) FROM image i join review r on (r._seq = i.review_seq) WHERE
+		r.pb_code = #{pbCode} AND file_type = '20') AS videoOnly
+	</select>
+
+	<resultMap id="PhotoAndVideoUrlResponse"
+		type="dw_intern_project.the_banchan_and_i.dto.response.PhotoAndVideoUrlResponseDto">
+		<result column="filePath" property="filePath" />
+		<result column="fileType" property="fileType" />
+	</resultMap>
+	<select id="getPhotoAndVideoUrl"
+		resultMap="PhotoAndVideoUrlResponse">
+		select i.file_path as filePath, i.file_type as fileType,
+		r._seq as reviewSeq
+		FROM review r
+		JOIN image i ON r._seq = i.review_seq
+		WHERE r.pb_code = #{pbCode}  order by r.reg_dt desc limit 12
+	</select>
+
+	<select id="getReviewScore"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ReviewScoreResponseDto">
+		SELECT
+		SUM(CASE WHEN score = 1 THEN count ELSE 0 END) AS
+		star1,
+		SUM(CASE WHEN score = 2 THEN count ELSE 0 END) AS star2,
+		SUM(CASE WHEN score = 3 THEN count ELSE 0 END) AS star3,
+		SUM(CASE WHEN
+		score = 4 THEN count ELSE 0 END) AS star4,
+		SUM(CASE WHEN score = 5 THEN
+		count ELSE 0 END) AS star5
+		FROM (
+		SELECT
+		score,
+		COUNT(*) AS count
+		FROM
+		review
+		WHERE pb_code = #{pbCode}
+		GROUP BY score
+		) t
+	</select>
+
+	<select id="getMonthlyScore"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.MonthlyScoreResponseDto">
+		WITH last_6_months AS (
+		SELECT TO_CHAR(DATE_TRUNC('month',
+		CURRENT_DATE) - INTERVAL '1 month' * (6 -
+		n), 'YYYYMM') AS month
+		FROM
+		generate_series(0, 5) n
+		),
+		monthly_reviews AS (
+		SELECT
+		TO_CHAR(TO_DATE(SUBSTR(reg_dt, 1, 8), 'YYYYMMDD'), 'YYYYMM') AS
+		month,
+		AVG(score) AS avg_score
+		FROM review
+		WHERE TO_DATE(SUBSTR(reg_dt, 1, 8),
+		'YYYYMMDD') >= DATE_TRUNC('month',
+		CURRENT_DATE) - INTERVAL '6
+		months'and pb_code = #{pbCode}
+		GROUP BY TO_CHAR(TO_DATE(SUBSTR(reg_dt,
+		1, 8), 'YYYYMMDD'), 'YYYYMM')
+		)
+		SELECT l.month,
+		ROUND(COALESCE(m.avg_score, 0), 1) AS score
+		FROM last_6_months l
+		LEFT
+		JOIN monthly_reviews m ON l.month = m.month
+		ORDER BY l.month
+	</select>
+
+	<resultMap id="getReviewListPagingMap" type="dw_intern_project.the_banchan_and_i.dto.response.ReviewListResponseDto">
+		<result property="seq" column="seq" />
+		<result property="regId" column="regId" />
+		<result property="regDt" column="regDt" />
+		<result property="content" column="content" />
+		<result property="reply" column="reply" />
+		<result property="replyStatus" column="replyStatus" />
+		<result property="keyword" column="keyword" />
+		<result property="classification" column="classification" />
+		<result property="image" column="image" />
+		<result property="type" column="type" />
+		<result property="bestNy" column="bestNy" />
+		<result property="score" column="score" />
+		<result property="peakEmotion" column="peakEmotion" />
+		<result property="positive" column="positive" />
+		<result property="neutral" column="neutral" />
+		<result property="negative" column="negative" />
+	</resultMap>
+	<select id="getReviewListPaging"
+		resultMap="getReviewListPagingMap">
+		SELECT r._seq as seq, r.reg_id as regId, MAX(r.reg_dt) as regDt,
+		MAX(r.best_yn) as bestNy,
+		r.content as content,
+		MAX(rr.reply) as reply, MAX(r.reply_status) as
+		replyStatus, r.keyword as keyword,
+		STRING_AGG(DISTINCT CASE 
+               WHEN i.file_path IS NOT NULL AND i.file_type IS NOT NULL 
+               THEN CONCAT(i.file_path, '||', i.file_type) 
+               END, ',') as image, r.score as score,
+		MAX(rr.peak_emotion) as peakEmotion, MAX(rr.positive) as positive,
+		MAX(rr.neutral) neutral, MAX(rr.negative) negative, STRING_AGG(distinct h.word ,',') classification,
+		r.user_seq userSeq
+		FROM review r
+		LEFT JOIN review_reply rr ON
+		(r."_seq" = rr.review_seq)
+		LEFT
+		JOIN image
+		i ON (r."_seq" =
+		i.review_seq)
+		left join review_classification rc on (r._seq=rc.review_seq) left join classification c on (rc.classification_seq=c."_seq")
+		left join highlight h on (h.review_classification_seq = rc."_seq")
+		WHERE 1=1 
+		and r.pb_code = #{pbCode}
+		<if test="classifications != null and !classifications.isEmpty()">	
+			<foreach item="classification" index="index" collection="classifications"
+				open="and c._seq in (" separator="," close=")">
+				 #{classification}
+			</foreach>
+		</if> 
+		<if test="keywords != null and !keywords.isEmpty()">
+			<foreach item="keyword" index="index" collection="keywords"
+				open="and (" separator="OR" close=")">
+				r.keyword like CONCAT('%', #{keyword}, '%')
+			</foreach>
+		</if>
+		GROUP BY r._seq
+		order by r.reg_dt DESC
+		OFFSET
+		#{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
+
+	<select id="countReviewWithKeyword" resultType="int">
+		SELECT count(distinct r._seq) FROM review r
+		LEFT JOIN review_reply rr ON
+		(r."_seq" = rr.review_seq)
+		LEFT
+		JOIN image
+		i ON (r."_seq" =
+		i.review_seq)
+		left join review_classification rc on (r._seq=rc.review_seq) left join classification c on (rc.classification_seq=c."_seq")
+		left join highlight h on (h.review_classification_seq = rc."_seq")
+		WHERE 1=1
+		and r.pb_code = #{pbCode} 
+		<if test="classifications != null and !classifications.isEmpty()">	
+			<foreach item="classification" index="index" collection="classifications"
+				open="and c._seq in (" separator="," close=")">
+				 #{classification}
+			</foreach>
+		</if> 
+		<if test="keywords != null and !keywords.isEmpty()">
+			<foreach item="keyword" index="index" collection="keywords"
+				open="and (" separator="OR" close=")">
+				r.keyword like CONCAT('%', #{keyword}, '%')
+			</foreach>
+		</if>
+	</select>
+
+	<select id="getReviewReplyList"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ReviewReplyListDto">
+		select p.name, p.pb_code pbCode, r.score, r.reg_id regId, r._seq seq, 
+		r.reg_dt regDt, p.img_code imgCode, p.img_num imgNum from review r
+		join product p on (r.pb_code = p.pb_code) where r.reply_status = #{status} order by reg_dt 
+		<if test="status == '03'">
+		desc
+		</if>
+        OFFSET #{offset} ROWS FETCH NEXT 5 ROWS ONLY
+	</select>
+
+	<select id="getReviewReplyDone"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ReviewReplyListDto">
+		select p.name, p.pb_code pbCode, r.score, r.reg_id regId, r._seq seq, 
+		r.reg_dt regDt, p.img_code imgCode, p.img_num imgNum from review r
+		join product p on (r.pb_code = p.pb_code) where r.reply_status = '03' order by reg_dt 
+        OFFSET #{offset} ROWS FETCH NEXT 5 ROWS ONLY
+	</select>
+
+	<select id="getProductReviewReply"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ProductReviewReplyDto">
+		select p.name, r._seq seq, p.pb_code pbCode, r.content, rr.reply, r.reg_id regId, r.reg_dt regDt, r.score, p.img_code imgCode, p.img_num imgNum 
+		from review r left join review_reply rr on(r._seq = rr.review_seq) join product p on (r.pb_code=p.pb_code) 
+		where r._seq = #{seq} limit 1
+	</select>
+
+	<select id="countReviewReply" resultType="int">
+		select count(*)
+		from review r
+		where r.reply_status = #{status}
+	</select>
+
+	<select id="getSubCategoryReviewReplyRequestDto" resultType="dw_intern_project.the_banchan_and_i.dto.request.ReviewReplyRequestDto">
+		SELECT string_agg(sub_category,',') AS subCategory FROM category where pb_code = #{pbCode}
+	</select>
+
+	<select id="getReviewContent" resultType="dw_intern_project.the_banchan_and_i.entity.Review">
+		SELECT _seq seq, content FROM review where _seq not in (select review_seq from review_classification) order by reg_dt desc 
+	</select>
+    
+	<select id="getReviewDetail"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ReviewDetailResponseDto">
+		SELECT MAX(r._seq) as seq, MAX(r.reg_id) as regId, MAX(r.reg_dt) as regDt,
+		MAX(r.best_yn) as bestNy,
+		MAX(r.content) as content,
+		MAX(rr.reply) as reply, MAX(r.reply_status) as
+		replyStatus, MAX(r.keyword) as keyword,MAX(r.score) as score,
+		STRING_AGG(DISTINCT CASE 
+               WHEN i.file_path IS NOT NULL AND i.file_type IS NOT NULL 
+               THEN CONCAT(i.file_path, '||', i.file_type) 
+               END, ',') as image, MAX(r.score) as score
+		FROM review r
+		LEFT JOIN review_reply rr ON
+		(r."_seq" = rr.review_seq)
+		LEFT
+		JOIN image
+		i ON (r."_seq" =
+		i.review_seq)
+		WHERE r._seq = #{seq} and r.pb_code = #{pbCode}
+	</select>
+    
+	<select id="getReviewImages"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ReviewImagesResponseDto">
+		SELECT r._seq as reviewSeq, i.file_path filePath,  i.file_type fileType
+		FROM review r
+		JOIN image
+		i ON (r."_seq" =
+		i.review_seq)
+		WHERE r.pb_code = #{pbCode} and i.file_path is not null order by r.reg_dt desc
+		OFFSET
+		#{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
+    
+	<select id="getUserReviewInfo"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.UserReviewInfoResponseDto">
+		select ROUND(AVG(r.score), 1) reviewAvg, count(r._seq) reviewCnt, count(CASE WHEN r.best_yn = 'Y' THEN 1 END) reviewBestCnt from review r where r.user_seq =#{userSeq} group by user_seq
+	</select>
+
+	<insert id="saveReview"
+		parameterType="dw_intern_project.the_banchan_and_i.dto.request.ReviewRegistRequestDto"
+		useGeneratedKeys="true" keyProperty="review_seq">
+		INSERT INTO review (
+		pb_code,
+		score,
+		content,
+		reg_id,
+		keyword,
+		type,
+		reg_dt,
+		user_seq
+		) VALUES (
+		#{pb_code},
+		#{rv_score},
+		#{rv_content},
+		#{regId},
+		#{keyword},
+		#{type},
+		TO_CHAR(NOW(), 'YYYYMMDDHH24MISS'),
+		'1'
+		)
+	</insert>
+
+	<insert id="saveReviewImage"
+		parameterType="dw_intern_project.the_banchan_and_i.dto.request.ReviewRegistRequestDto">
+		INSERT INTO image (
+		review_seq,
+		file_path,
+		file_type
+		) VALUES
+		<foreach collection="image" item="img" separator=",">
+			(
+			#{review_seq},
+			#{img},
+			10
+			)
+		</foreach>
+	</insert>
+	
+	<update id="updateReplyStatus">
+        UPDATE review
+        SET reply_status = #{status}
+        WHERE _seq = #{seq}
+    </update>
+</mapper>

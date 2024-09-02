@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.ProductRepository">
+	<select id="getAllPbCode" resultType="java.lang.String">
+		SELECT pb_code from product where pb_code not in (select pb_code from review_summary where positive_highlight 
+			is null)
+	</select>
+	<select id="getProductId" resultType="Long">
+		SELECT _seq FROM product
+	</select>
+	<select id="getProductListWithCategory"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ProductResponseDto">
+		SELECT p.pb_code as pbCode
+		, p.name
+		, p.price
+		, p.img_code as imgCode
+		, p.img_num as imgNum
+		, p.img_text as imgText
+		, p.sub_name as subName
+		, p.weight as weight
+		, p.shipping_fee as shippingFee
+		, ROUND(AVG(r.score),1) as grade
+		, COUNT(r._seq) as reviewCnt
+		, p.sold_out as soldOut
+		FROM PRODUCT p join review r on p.pb_code = r.pb_code join category c on
+		p.pb_code = c.pb_code
+		WHERE CASE WHEN LENGTH(#{categoryNum}) = 12 THEN c.sub_num = #{categoryNum}
+		WHEN LENGTH(#{categoryNum}) = 8 THEN SUBSTRING(c.main_num, 1, 8) =
+		#{categoryNum}
+		ELSE 1 = 1
+		END
+		group by p.pb_code ORDER BY COUNT(r."_seq") desc
+		OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
+	<select id="searchProduct"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ProductResponseDto">
+		SELECT p.pb_code as pbCode
+		, p.name
+		, p.price
+		, p.img_code as imgCode
+		, p.img_num as imgNum
+		, p.img_text as imgText
+		, p.sub_name as subName
+		, p.weight as weight
+		, p.shipping_fee as shippingFee
+		, ROUND(AVG(r.score),1) as grade
+		, COUNT(r._seq) as reviewCnt
+		, p.sold_out as soldOut
+		FROM PRODUCT p join review r on p.pb_code = r.pb_code join category c on
+		p.pb_code = c.pb_code
+		WHERE p.name like CONCAT('%', #{word}, '%')
+		group by p.pb_code ORDER BY
+		COUNT(r."_seq") desc
+		OFFSET #{offset} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
+
+	<select id="getProductDetail"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ProductResponseDto">
+		SELECT p.pb_code as pbCode
+		, p.name
+		, p.price
+		, p.img_code as imgCode
+		, p.img_num as imgNum
+		, p.img_text as imgText
+		, p.sub_name as subName
+		, p.weight as weight
+		, p.shipping_fee as shippingFee
+		, ROUND(AVG(r.score), 1) as grade
+		, COUNT(r._seq) as reviewCnt
+		, p.sold_out as soldOut
+		FROM PRODUCT p join review r on p.pb_code = r.pb_code where p.pb_code =
+		#{pbCode} group by p.pb_code
+	</select>
+</mapper>

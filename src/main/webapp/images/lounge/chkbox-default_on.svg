@@ -1,0 +1,9 @@
+<svg id="chkbox_default_on" data-name="chkbox/default_on" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="Group_3" data-name="Group 3">
+    <rect id="Rectangle_Copy_9" data-name="Rectangle Copy 9" width="16" height="16" rx="2" fill="#458e15"/>
+    <g id="Group" transform="translate(2 2)">
+      <rect id="Rectangle" width="12" height="12" fill="none"/>
+      <path id="Path" d="M7.967.895,3.007,5.966a.11.11,0,0,1-.158,0L.033,3.087a.116.116,0,0,1,0-.161l.684-.7a.11.11,0,0,1,.158,0l2.053,2.1L7.125.033a.11.11,0,0,1,.158,0l.684.7A.116.116,0,0,1,7.967.895Z" transform="translate(2 3)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

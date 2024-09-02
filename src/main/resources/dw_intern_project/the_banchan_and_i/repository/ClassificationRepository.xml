@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.ClassificationRepository">
+	<select id="getClassification"
+		resultType="dw_intern_project.the_banchan_and_i.dto.response.ClassificationCntResponseDto">
+		select c.name, count(*), MAX(c._seq) seq from
+		review_classification rc join classification c on
+		(rc.classification_seq = c."_seq") join review r on
+		(r."_seq"=rc.review_seq)
+		where r.pb_code = #{pbCode}
+		group by c.name
+		order by
+		CASE c.name
+		WHEN '만족도' THEN 1
+		WHEN '품질' THEN 2
+		WHEN '맛' THEN 3
+		WHEN '신선도' THEN 4
+		WHEN '양' THEN 5
+		WHEN '가격' THEN 6
+		WHEN '포장·배송' THEN 7
+		WHEN '유통기한' THEN 8
+		END
+	</select>
+</mapper>

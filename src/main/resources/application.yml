@@ -1,0 +1,66 @@
+spring:
+  datasource:
+    #url: jdbc:log4jdbc:postgresql://${AMAZON_RDS_ENDPOINT}:5432/${DB_NAME}
+    url: jdbc:postgresql://${AMAZON_RDS_ENDPOINT}:5432/${DB_NAME}
+    username: ${AMAZON_RDS_USER_NAME}
+    password: ${AMAZON_RDS_USER_PASSWORD}
+    #driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  mybatis:
+    mapper-locations: /**/*.xml
+    configuration:
+      map-underscore-to-camel-case:true
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+server:
+  port: 8080
+
+# [사용 안함] AWS S3 관련, 외부 유출 주의
+cloud:
+  aws:
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
+     # accessKey: ${AWS_ACCESS_KEY_ID}
+     # secretKey: ${AWS_SECRET_ACCESS_KEY}
+      
+s3:
+  aws:
+    credentials:
+      accessKey: ${S3_ACCESS_KEY_ID}
+      secretKey: ${S3_SECRET_ACCESS_KEY}
+      bucket: ${S3_BUCKET_NAME}   
+      path: ${IMAGE_PATH}    
+ #     accessKey: ${S3_ACCESS_KEY_ID}
+ #     secretKey: ${S3_SECRET_ACCESS_KEY}
+ #     bucket: ${S3_BUCKET_NAME}   
+ #     path: ${IMAGE_PATH}      
+# log4jdbc, Mybatis Console Log
+#logging:
+#  level:
+#    com:
+#      zaxxer:
+#        hikari: INFO
+#    javax:
+#      sql:
+#        DataSource: OFF
+#    jdbc:
+#      audit: OFF
+#      resultset: OFF
+#      resultsettable: INFO  # SQL 결과 데이터 Table을 로그로 남긴다.
+#      sqlonly: OFF          # SQL만 로그로 남긴다.
+#      sqltiming: INFO       # SQL과 소요시간을 표기한다.
+#      connection: OFF       # 커넥션 확인 가능
+#    org:
+#      hibernate:
+#        SQL: DEBUG
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE
+#              
+#naver:
+#  search:
+#    client-secret: ${CLIENT_SECRET_NAVER_AI}
+#    client-id: ${CLIENT_ID_NAVER_AI}

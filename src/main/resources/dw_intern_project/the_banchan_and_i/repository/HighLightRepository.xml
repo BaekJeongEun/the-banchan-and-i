@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="dw_intern_project.the_banchan_and_i.repository.HighLightRepository">
+	<insert id="savehighLight" parameterType="java.util.List">
+		INSERT INTO highlight (review_classification_seq, word)
+		VALUES
+		<foreach collection="list" item="highLight" separator=",">
+			(#{highLight.reiewClassificationSeq}, #{highLight.word})
+		</foreach>
+	</insert>
+</mapper>
